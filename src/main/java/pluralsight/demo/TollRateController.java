@@ -15,6 +15,8 @@ public class TollRateController {
 		
 		TollRate tr;
 		
+		System.out.println("Station requested: " + stationId);
+		
 		switch(stationId) {
 		case 1:
 			tr = new TollRate(stationId, new BigDecimal("0.55"), Instant.now().toString());

@@ -5,20 +5,23 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomHealthCheck implements HealthIndicator{
+public class CustomHealthCheck implements HealthIndicator {
 
-    int errorCode = 0;
+	int errorcode = 0;
+	
+	@Override
+	public Health health() {
+		
+		System.out.println("health check performed, error code is " + errorcode);
+		
+		if(errorcode > 4 && errorcode < 10) {
+			errorcode++;
+			return Health.down().withDetail("Custom Error Code", errorcode).build();
+		}
+		else {
 
-    @Override
-    public Health health() {
-        System.out.println("health check performed. Error code is " + errorCode);
-
-        if(errorCode > 4 && errorCode<8){
-            errorCode++;
-            return Health.down().withDetail("Custom error code", errorCode).build();
-        }
-
-        errorCode++;
-        return Health.up().build();
-    }
+			errorcode++;
+			return Health.up().build();
+		}
+	}
 }
